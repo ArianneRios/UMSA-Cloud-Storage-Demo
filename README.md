@@ -16,6 +16,17 @@ This project is intended for academic demonstration and portfolio presentation. 
 
 ---
 
+## General Flow & Architecture
+
+```text
+Student → Web App → NestJS API → PostgreSQL → AWS S3 Input Bucket → AWS Lambda Scanner → VirusTotal → S3 Clean Bucket / S3 Quarantine Bucket → SNS Alerts → CloudWatch Logs
+```
+
+> [!IMPORTANT]
+> The malware analysis is performed asynchronously using an external AWS Lambda. If the Lambda is inactive, the file will remain in `ANALYZING` or `PENDING` status.
+
+---
+
 ## Main Features
 
 * File upload workflow
@@ -25,18 +36,57 @@ This project is intended for academic demonstration and portfolio presentation. 
 * Backend structure for storage-related operations
 * Academic simulation of a cloud storage platform
 * Clean project organization for technical presentation
+* SHA-256 file hashing and virus/malware detection simulation
+
+---
+
+## Security
+
+The system considers two types of hashes:
+
+1. **Password Hash**:
+   - In the real backend, passwords will be stored as a `password_hash`.
+   - It is recommended to use bcrypt or Argon2.
+   - Plain text passwords must never be stored.
+
+2. **File Hash**:
+   - Each uploaded file generates a SHA-256 hash.
+   - This hash acts as a digital fingerprint of the file.
+   - In the real integration, it will be used to query VirusTotal.
+
+---
+
+## Demo Mode
+
+Currently, the system runs in demo mode using LocalStorage.
+This means:
+- There is no real connection to PostgreSQL yet.
+- There is no real connection to AWS S3 yet.
+- There is no real query to VirusTotal yet.
+- The scan workflow is simulated.
+- Data is saved locally in the browser.
 
 ---
 
 ## Technologies Used
 
-* TypeScript
-* Vite
-* CSS
-* Backend services
-* File management concepts
-* Git
-* GitHub
+### Frontend
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- React Router
+- LocalStorage for demo mode
+
+### Backend Expected
+- NestJS
+- PostgreSQL
+- AWS SDK
+- AWS S3
+- AWS Lambda
+- VirusTotal API
+- Amazon SNS
+- Amazon CloudWatch
 
 ---
 
@@ -94,6 +144,16 @@ pnpm dev
 
 ```text
 http://localhost:5173
+```
+
+### 6. Backend Setup (Optional/Backend Folder)
+
+To set up the backend locally:
+
+```bash
+cd backend
+npm install
+npm run start:dev
 ```
 
 ---

@@ -1,16 +1,20 @@
-# v0 runtime files
-__v0_runtime_loader.js
+# V0 runtime files
+
+__v0_runtimeloader.js
 __v0_devtools.tsx
 __v0_jsx-dev-runtime.ts
 
 # Common ignores
+
 node_modules
 .next/
 .env
-.env*.local
-.DS_Storenode_modules/
-dist/
-.env
 .env.local
+.env*.local
 .DS_Store
+dist/
 package-lock.json
+
+# Project sensitive/config files
+
+backend/.env
