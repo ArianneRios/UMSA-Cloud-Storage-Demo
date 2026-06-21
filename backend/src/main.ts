@@ -6,14 +6,22 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
 
+  const frontendUrl = process.env.FRONTEND_URL;
+  const origins = [
+    'http://localhost:5173',
+    'https://umsa-cloud-storage-demo.vercel.app'
+  ];
+  if (frontendUrl && !origins.includes(frontendUrl)) {
+    origins.push(frontendUrl);
+  }
+
   app.enableCors({
-    origin: [
-      'http://localhost:5173',
-      'https://umsa-cloud-storage-demo.vercel.app'
-    ],
+    origin: origins,
     credentials: true,
   });
 
-  await app.listen(3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`Backend running on port ${port}`);
 }
 bootstrap();
