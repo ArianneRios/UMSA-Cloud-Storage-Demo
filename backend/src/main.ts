@@ -7,7 +7,10 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://umsa-cloud-storage-demo.vercel.app'
+    ],
     credentials: true,
   });
 
